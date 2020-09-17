@@ -1,44 +1,16 @@
-/*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
-*/
-
-/* 
-* File:   main.cpp
-* Author: KnightDanila
-*
-* Created on 4 июня 2019 г., 16:21
-*/
-
-#include <iostream>                                     // для стандартных потоков ввода-вывода
-#include <windows.h>                                    // для локализации конслои
-#include <numbers>										// для pi, слава богу, они добавили это в C++20
 #include <cmath>                                        // для функции sin
+#include <iostream>                                     // для стандартных потоков ввода-вывода
+#include <numbers>										// для pi, слава богу, они добавили это в C++20
+#include <windows.h>                                    // для локализации конслои
 
 #include "libs\GL_AL\glew.h"
 #include "libs\GL_AL\glfw3.h"
 
-// OpenGL
 #define GLUT_DISABLE_ATEXIT_HACK
-//#define GLFW_DLL
-//#define GLEW_STATIC
-
-
-#pragma comment(lib, "libs\\GL_AL\\glfw3.lib")
-#pragma comment(lib, "libs\\GL_AL\\glut32.lib")
-#pragma comment(lib, "libs\\GL_AL\\alut.lib")
-#pragma comment(lib, "libs\\GL_AL\\glew32.lib")
-#pragma comment(lib, "libs\\GL_AL\\glew32s.lib")
-
-// VS2013+ - bugfix - Thanks Bolsunov Dmitry
-#pragma comment(lib, "msvcrt.lib")
-#pragma comment(lib, "msvcmrt.lib")
-#pragma comment(lib, "legacy_stdio_definitions.lib")
 
 using namespace std;
 
-template <typename T>
+template <class T>
 auto Println(const T i, ostream& out = cout) -> void {
     out << i << endl;
 }
@@ -49,15 +21,12 @@ auto ArgsEcho(const int argc, char** argv) -> void {
         Println("NO ARGS");
     }
     else {
-        for (auto i = 0; i < argc; i++) {
+        for (auto i = 0u; i < argc; i++) {
             Println(argv[i]);
         }
     }
     Println("____________\n");
 }
-/*
-* 
-*/
 
 auto main(const int argc, char** argv) -> int {
 
@@ -65,17 +34,17 @@ auto main(const int argc, char** argv) -> int {
     SetConsoleOutputCP(1251);
     
     ArgsEcho(argc, argv);
-    Println("Hello OpenGL");
+    Println("Hello OpenGL!");
+    Println("Author: Alex Safyuilin");
 
     if (!glfwInit()) {
         Println("Ошибка при инициализации GLFW\n", cerr);
         return -1;
     }
     
-    glfwWindowHint(GLFW_SAMPLES, 4); // 4x Сглаживание
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // Мы хотим использовать OpenGL 3.3
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
+    glfwWindowHint(GLFW_SAMPLES, 8); // 8x Сглаживание
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // Мы хотим использовать максимальную
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6); // OpenGL 4.6
     
     // Открыть окно и создать в нем контекст OpenGL
     // (В сопроводительном исходном коде эта переменная является глобальной)
@@ -113,7 +82,7 @@ auto main(const int argc, char** argv) -> int {
         colorRgb <= 180.f ? colorRgb += 0.1f : colorRgb = 0.f;
     } 
     
-
+    // Убиваем окно
     glfwTerminate();
     return EXIT_SUCCESS;
 }
